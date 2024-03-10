@@ -1,0 +1,33 @@
+# for deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderate-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderate
+  template:
+    metadata:
+      labels:
+        app: moderate
+    spec:
+      containers:
+      - name: moderate
+        image: dineshranjanbiswal/moderate
+---
+
+# for clusterip
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderate-clusterip-srv
+spec:
+  selector:
+    app: moderate
+  ports:
+  - name: moderate
+    protocol: TCP
+    port: 8083
+    targetPort: 8083

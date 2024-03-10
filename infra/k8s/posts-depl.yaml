@@ -1,0 +1,49 @@
+# for deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts
+  template:
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+      - name: posts
+        image: dineshranjanbiswal/posts
+---
+# for clustorip
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv
+spec:
+  selector:
+    app: posts
+  ports:
+  - name: posts
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+
+# for NodePort
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-srv
+spec:
+  type: NodePort
+  selector:
+    app: posts
+  ports:
+  - name: posts
+    protocol: TCP
+    port: 8080
+    targetPort: 8080

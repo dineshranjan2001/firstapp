@@ -1,0 +1,61 @@
+apiVersion: skaffold/v3
+kind: Config
+build:
+  artifacts:
+    - image: dineshranjanbiswal/client
+      context: ../../client
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.js'
+      docker:
+        dockerfile: Dockerfile
+    - image: dineshranjanbiswal/comments
+      context: ../../comments
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+      docker:
+        dockerfile: Dockerfile
+    - image: dineshranjanbiswal/event-bus
+      context: ../../event-bus
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+      docker:
+        dockerfile: Dockerfile
+    - image: dineshranjanbiswal/moderate
+      context: ../../moderate
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+      docker:
+        dockerfile: Dockerfile
+    - image: dineshranjanbiswal/posts
+      context: ../../posts
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+      docker:
+        dockerfile: Dockerfile
+    - image: dineshranjanbiswal/query
+      context: ../../query
+      sync:
+        manual:
+          - dest: .
+            src: '*.js'
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+manifests:
+      rawYaml:
+        - ../k8s/*
+deploy:
+  kubectl: {}
+
+    
